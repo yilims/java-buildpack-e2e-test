@@ -1,4 +1,4 @@
-name: Azure java buildpack E2E Test workflow
+name: Create builds
 on:
   release:
     types:
