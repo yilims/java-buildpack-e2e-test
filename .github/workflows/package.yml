@@ -30,7 +30,7 @@ jobs:
         run: mvn clean package -DkipTests
 
       - name: create staging
-        run: mkdir -p ${{ path }} && cp target/*.jar ${{ path }}
+        run: mkdir -p ${path} && cp target/*.jar ${path}
         env:
           path: java-${{ matrix.version }}
 
