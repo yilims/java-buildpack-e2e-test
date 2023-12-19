@@ -10,6 +10,11 @@ jobs:
         version: [ 8, 11, 17, 21 ]
     runs-on: ubuntu-latest
 
+    defaults:
+      run:
+        shell: bash
+        working-directory: ./springboot
+
     steps:
       - uses: actions/checkout@v3
 
