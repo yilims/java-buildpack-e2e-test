@@ -40,7 +40,7 @@ jobs:
       - uses: actions/upload-artifact@v3
         with:
           name: java${{ matrix.version }}-jar-spring.tar.gz
-          path: java-${{ matrix.version }}
+          path: ./springboot/java-${{ matrix.version }}
           if-no-files-found: error
 
 
