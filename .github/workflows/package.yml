@@ -35,9 +35,7 @@ jobs:
         run: mvn clean package -DkipTests
 
       - name: create staging
-        run: mkdir -p ${path} && cp target/*.jar ${path}
-        env:
-          path: java-${{ matrix.version }}
+        run: mkdir -p java-${{ matrix.version }} && cp target/*.jar java-${{ matrix.version }}
 
       - uses: actions/upload-artifact@v3
         with:
