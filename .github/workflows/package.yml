@@ -37,10 +37,10 @@ jobs:
       - name: create staging
         run: mkdir -p java-${{ matrix.version }} && cp target/*.jar java-${{ matrix.version }}
 
-      - uses: actions/upload-artifact@v3
+      - name: upload artifact
+        uses: actions/upload-release-asset@v1
         with:
-          name: java${{ matrix.version }}-jar-spring.tar.gz
-          path: ./springboot/java-${{ matrix.version }}
-          if-no-files-found: error
-
-
+          upload_url: ${{ github.event.release.upload_url }}
+          asset_path: ./springboot/java-${{ matrix.version }}
+          asset_name: java${{ matrix.version }}-jar-spring.tar.gz
+          asset_content_type: application/gzip
