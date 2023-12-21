@@ -53,19 +53,18 @@ jobs:
     defaults:
       run:
         shell: bash
-        working-directory: ./springboot
 
     steps:
       - uses: actions/checkout@v3
 
       - name: create gz file
-        run: tar -czvf java-source-spring.tar.gz .
+        run: tar -czvf java-source-spring.tar.gz ./springboot
 
       - name: upload asset
         uses: actions/upload-release-asset@v1
         with:
           upload_url: ${{ github.event.release.upload_url }}
-          asset_path: ./springboot/java-source-spring.tar.gz
+          asset_path: ./java-source-spring.tar.gz
           asset_name: java-source-spring.tar.gz
           asset_content_type: application/gzip
         env:
