@@ -13,7 +13,7 @@ public class TLSOutboundTest implements TestCase {
     @Override
     public void test(Argument argument) {
         RestTemplate restTemplate = new RestTemplate();
-        ResponseEntity<String> response = restTemplate.getForEntity("https://www.bingg.com", String.class);
+        ResponseEntity<String> response = restTemplate.getForEntity("https://www.bing.com", String.class);
         if (response.getStatusCode() != HttpStatus.OK) {
             throw new RuntimeException("Requesting to www.bing.com got unexpected status " + response.getStatusCode());
         }
