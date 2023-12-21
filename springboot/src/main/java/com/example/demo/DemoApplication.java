@@ -14,7 +14,7 @@ public class DemoApplication {
 		SpringApplication.run(DemoApplication.class, args);
 	}
 
-	@GetMapping("/javaversion")
+	@GetMapping("/check")
 	public String getJavaVersion() {
 		Properties props = System.getProperties();
 		return props.getProperty("java.version");
