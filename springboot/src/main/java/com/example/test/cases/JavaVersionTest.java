@@ -12,8 +12,14 @@ public class JavaVersionTest implements TestCase {
     public void test(Argument argument) {
         Properties props = System.getProperties();
         String actualJdkVersion = props.getProperty("java.version");
-        if (!actualJdkVersion.startsWith(argument.getExpectedJdkVersion())) {
-            throw new RuntimeException("Actual version: " + actualJdkVersion + " not same as the expected version: " + argument.getExpectedJdkVersion());
+        if (argument.getExpectedJdkVersion().equals("8")) {
+            if (!actualJdkVersion.startsWith("1.8")) {
+                throw new RuntimeException("Actual version: " + actualJdkVersion + " not same as the expected version: "
+                    + argument.getExpectedJdkVersion());
+            }
+        } else if (!actualJdkVersion.startsWith(argument.getExpectedJdkVersion())) {
+            throw new RuntimeException("Actual version: " + actualJdkVersion + " not same as the expected version: "
+                + argument.getExpectedJdkVersion());
         }
     }
 }
