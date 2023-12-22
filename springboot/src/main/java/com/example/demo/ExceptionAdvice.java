@@ -15,7 +15,7 @@ public class ExceptionAdvice {
         StringWriter sw = new StringWriter();
         PrintWriter pw = new PrintWriter(sw);
         e.printStackTrace(pw);
-        String msg=sw.toString();
+        String msg = sw.toString();
         return new ResponseEntity<>(msg, null, 500);
     }
 }
