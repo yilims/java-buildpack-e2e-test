@@ -1,4 +1,5 @@
-name-template: 'v$RESOLVED_VERSION'
+template: $CHANGES
+name-template: '$RESOLVED_VERSION'
 tag-template: 'v$RESOLVED_VERSION'
 categories:
   - title: 'Features'
@@ -12,8 +13,8 @@ categories:
       - 'bug'
   - title: 'Maintenance'
     label: 'chore'
-change-template: '- $TITLE @$AUTHOR (#$NUMBER)'
-change-title-escapes: '\<*_&'
+exclude-labels:
+    - type:question
 version-resolver:
   major:
     labels:
@@ -25,7 +26,3 @@ version-resolver:
     labels:
       - 'patch'
   default: patch
-template: |
-  ## Changes
-
-  $CHANGES
