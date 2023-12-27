@@ -1,0 +1,44 @@
+name: Trigger auto deployment for java-repo-test
+
+# When this action will be executed
+on:
+  # Automatically trigger it when detected changes in repo
+  push:
+    branches: 
+      [ release ]
+    paths:
+    - '**'
+    - '.github/workflows/java-repo-test-AutoDeployTrigger-a6277a1d-69e1-4958-92b2-9ffd0e77d502.yml'
+
+  # Allow manual trigger 
+  workflow_dispatch:
+      
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout to the branch
+        uses: actions/checkout@v2
+
+      - name: Azure Login
+        uses: azure/login@v1
+        with:
+          creds: ${{ secrets.JAVAREPOTEST_AZURE_CREDENTIALS }}
+
+      - name: Build and push container image to registry
+        uses: azure/container-apps-deploy-action@v2
+        with:
+          appSourcePath: ${{ github.workspace }} 
+          registryUrl: cappsinttestregistryprivate.azurecr.io
+          registryUsername: ${{ secrets.JAVAREPOTEST_REGISTRY_USERNAME }}
+          registryPassword: ${{ secrets.JAVAREPOTEST_REGISTRY_PASSWORD }}
+          containerAppName: java-repo-test
+          resourceGroup: capps-yili-rg
+          imageToBuild: cappsinttestregistryprivate.azurecr.io/java-repo-test:${{ github.sha }}
+          
+          buildArguments: |
+            "BP_JVM_VERSION=21" "BP_MAVEN_VERSION=4" "BP_MAVEN_POM_FILE=springboot/pom.xml" "BP_MAVEN_BUILT_ARTIFACT=springboot/target/*.[ejw]ar" "BP_MAVEN_BUILD_ARGUMENTS=-Dmaven.test.skip=true --no-transfer-progress package"
+
+     
+
