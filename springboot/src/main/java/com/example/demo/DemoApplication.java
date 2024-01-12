@@ -4,6 +4,8 @@ import com.example.test.Argument;
 import com.example.test.TestCase;
 import com.example.util.ApplicationContextUtil;
 import java.util.Collection;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -15,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class DemoApplication {
 
+	private final static Logger LOGGER = LoggerFactory.getLogger(DemoApplication.class);
 	private final ApplicationContextUtil applicationContextUtil;
 
 	@Autowired
@@ -33,7 +36,9 @@ public class DemoApplication {
 		argument.setExpectedJdkVersion(jdkVersion);
 		Collection<TestCase> testCases = applicationContextUtil.getBeans(TestCase.class);
 		for (TestCase testCase : testCases) {
+			LOGGER.info("Testing case: " + testCase.getClass().getName());
 			testCase.test(argument);
+			LOGGER.info("Testing case: " + testCase.getClass().getName() + " passed");
 		}
 		return SUCCESS;
 	}
