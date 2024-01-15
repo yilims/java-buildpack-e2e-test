@@ -32,7 +32,7 @@ jobs:
           restore-keys: ${{ runner.os }}-m2
 
       - name: package
-        run: mvn clean package -DkipTests
+        run: mvn clean package -DskipTests
 
       - name: create gz file
         run: tar -czvf java${{ matrix.version }}-jar-spring.tar.gz  -C target demo-0.0.1-SNAPSHOT.jar
@@ -66,6 +66,63 @@ jobs:
           upload_url: ${{ github.event.release.upload_url }}
           asset_path: ./java-source-spring.tar.gz
           asset_name: java-source-spring.tar.gz
+          asset_content_type: application/gzip
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+
+  war-build:
+    runs-on: ubuntu-latest
+
+    defaults:
+      run:
+        shell: bash
+        working-directory: ./war
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Set up the Maven dependencies caching
+        uses: actions/cache@v3
+        with:
+          path: ~/.m2
+          key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
+          restore-keys: ${{ runner.os }}-m2
+
+      - name: package
+        run: mvn clean package -DskipTests
+
+      - name: create gz file
+        run: tar -czvf java-17-war-spring.tar.gz -C demo-0.0.1-SNAPSHOT.war
+
+      - name: upload asset
+        uses: actions/upload-release-asset@v1
+        with:
+          upload_url: ${{ github.event.release.upload_url }}
+          asset_path: ./war/java-17-war-spring.tar.gz
+          asset_name: java-17-war-spring.tar.gz
+          asset_content_type: application/gzip
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+
+  war-source-build:
+    runs-on: ubuntu-latest
+
+    defaults:
+      run:
+        shell: bash
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: create gz file for war
+        run: tar -czvf java-source-spring-war.tar.gz -C war .
+
+      - name: upload asset
+        uses: actions/upload-release-asset@v1
+        with:
+          upload_url: ${{ github.event.release.upload_url }}
+          asset_path: ./java-source-spring-war.tar.gz
+          asset_name: java-source-spring-war.tar.gz
           asset_content_type: application/gzip
         env:
           GITHUB_TOKEN: ${{ github.token }}
