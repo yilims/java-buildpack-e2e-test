@@ -98,7 +98,7 @@ jobs:
         run: mvn clean package -DskipTests
 
       - name: create gz file
-        run: tar -czvf java-17-war-spring.tar.gz -C demo-0.0.1-SNAPSHOT.war
+        run: tar -czvf java-17-war-spring.tar.gz -C target demo-0.0.1-SNAPSHOT.war
 
       - name: upload asset
         uses: actions/upload-release-asset@v1
