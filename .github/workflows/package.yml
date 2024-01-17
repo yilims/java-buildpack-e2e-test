@@ -101,9 +101,9 @@ jobs:
         uses: actions/upload-release-asset@v1
         with:
           upload_url: ${{ github.event.release.upload_url }}
-          asset_path: ./war/java17-spring.war
+          asset_path: ./war/target/java17-spring.war
           asset_name: java17-spring.war
-          asset_content_type: application/gzip
+          asset_content_type: application/war
         env:
           GITHUB_TOKEN: ${{ github.token }}
 
