@@ -43,4 +43,9 @@ public class DemoApplication {
 		return SUCCESS;
 	}
 
+	@GetMapping("/")
+	public String hello() {
+		return "Sample Spring boot app.";
+	}
+
 }
